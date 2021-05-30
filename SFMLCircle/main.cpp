@@ -4,6 +4,9 @@
 #include <SFML/Window/Keyboard.hpp>
 using namespace std;
 // done -- orbitting circle
+// done - detects on spacebar whether it overlaps the rectangle
+// todo : print out instructions for to press space over the circle
+// todo: add sound on overlap success -- an engine, add points? , increase speed, put out a new skill check line ,put on appstore
 // todo -- add checkpoints for when to keypress and make circle go faster
 
 int defaultFrameRate = 144;
