@@ -1,0 +1,4 @@
+//cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n";
+
+//cout << fixed << setprecision(0) << "Line position: " << line.getPosition().x << " , " << fixed << setprecision(0) << line.getPosition().y << "\n";
+
