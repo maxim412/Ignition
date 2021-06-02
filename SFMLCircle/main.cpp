@@ -20,8 +20,7 @@ sf::Vector2f transform(float t)
     float const a = ellipse_width / 2.f;
     float const b = ellipse_height / 2.f;
     float const pi = 3.141592653589f;
-    float const tau = 2.f * pi;
-    
+    float tau = 2.f * pi;
     float const x = (std::fmodf(t, period_ms) / period_ms) * tau;
     return sf::Vector2f(a * std::cos(x), b * std::sin(x));
 }
@@ -35,7 +34,8 @@ int main()
     //orbitter white
     sf::CircleShape shape(28.f);
     shape.setFillColor(sf::Color::Black);
-   //orbitter
+    shape.setOutlineThickness(5);
+   //orbitter white
 
     //center red circle
     sf::CircleShape shapeTwo(208.f);
@@ -43,65 +43,56 @@ int main()
     shapeTwo.setOutlineThickness(5);
     shapeTwo.setOutlineColor(sf::Color(250, 150, 100));
     shapeTwo.setPosition(325.00, 320.00);
-    //base red
+    //center red circle
 
     //line white on top (skillcheck)
     sf::RectangleShape line(sf::Vector2f(30.f, 5.f));
     line.rotate(45.f);
     line.setPosition(600.f, 280.f);
     line.setRotation(100.f);
-    //skillcheck
-
+    //line white on top (skillcheck)
     sf::Clock clock;
 
     while (window.isOpen())
     {
+       
+
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
         float const t = static_cast<float>(clock.getElapsedTime().asMilliseconds());
-        shape.setPosition(sf::Vector2f(500.f, 500.f) + transform(t));
+        shape.setPosition(sf::Vector2f(500.f, 500.f) + (transform(t)));
+        int yCoord = shape.getPosition().y;
+        int xCoord = shape.getPosition().x;
 
-        window.clear();
-        window.draw(shape);
-
-        shape.setOutlineThickness(5);
-        shape.setOutlineColor(sf::Color(255, 255, 255));
-        //orbit
-
-        window.draw(shapeTwo);
-        
-        shapeTwo.setOutlineColor(sf::Color::White);
-        //base
-
-        
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
-            cout << endl;
             cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
-            cout << endl;
+        }*/
 
-            int yCoord = shape.getPosition().y;
-            int xCoord = shape.getPosition().x;
-            //cout << "X: " << xCoord << " , " << "Y: " << yCoord;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590) && (yCoord >= 250 && yCoord <= 270))
+        {
 
-            if ((xCoord >= 570 && xCoord <= 590) && (yCoord >= 250 && yCoord <= 270))
-            {
-                //cout << "Sucess";
                 window.clear(sf::Color::Black);
-                period_ms = 4750.f;
+                period_ms = 4900.f;
                 line.setPosition(670.f, 310.f);
                 line.setRotation(125.f);
-                if ((xCoord >= 570 && xCoord <= 590) && (yCoord >= 250 && yCoord <= 270))
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (xCoord >= 645 && xCoord <= 675) && (yCoord >= 290 && yCoord <= 310))
+        {
 
-            }
+            window.clear(sf::Color::Black);
+            period_ms = 4800.f;
+            line.setPosition(705.f, 340.f);
+            line.setRotation(140.f);
         }
         
-
+        window.clear();
+        window.draw(shape);
+        window.draw(shapeTwo);
         window.draw(line);
         window.display();
 
