@@ -1,18 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <iomanip>
-#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
 using namespace std;
 // done -- orbitting circle
 // done - detects on spacebar whether it overlaps the rectangle
 // todo : print out instructions for to press space over the circle
 // todo: add sound on overlap success -- an engine, add points? , increase speed, put out a new skill check line ,put on appstore
 // todo -- add checkpoints for when to keypress and make circle go faster
+//todo, add rev soon
 
 int defaultFrameRate = 144;
-
+float timeFactor = 1.0f;
+float accTime = 0.0f;
 //todo
-float  period_ms = 5000.f;
+
 sf::Vector2f transform(float t)
 {
     float const ellipse_width = 500.f;
@@ -20,6 +22,7 @@ sf::Vector2f transform(float t)
     float const a = ellipse_width / 2.f;
     float const b = ellipse_height / 2.f;
     float const pi = 3.141592653589f;
+    float  period_ms = 5000.f;
     float tau = 2.f * pi;
     float const x = (std::fmodf(t, period_ms) / period_ms) * tau;
     return sf::Vector2f(a * std::cos(x), b * std::sin(x));
@@ -60,20 +63,37 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            int yCoord = shape.getPosition().y;
+            int xCoord = shape.getPosition().x;
+            cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+            }   
+            /*else if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
+                timeFactor = 1.0f;*/
+            else if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590 && yCoord >= 250 && yCoord <= 270))
+            {
+                timeFactor = 2.0f;
+                window.clear(sf::Color::Black);
+                line.setPosition(670.f, 310.f);
+                line.setRotation(125.f);
+            }
+                
         }
-        float const t = static_cast<float>(clock.getElapsedTime().asMilliseconds());
-        shape.setPosition(sf::Vector2f(500.f, 500.f) + (transform(t)));
-        int yCoord = shape.getPosition().y;
-        int xCoord = shape.getPosition().x;
+        //float const t = static_cast<float>(clock.getElapsedTime().asMilliseconds());
+        float const dt = static_cast<float>(clock.getElapsedTime().asMilliseconds());
+        accTime += dt * timeFactor;
+        shape.setPosition(sf::Vector2f(500.f, 500.f) + (transform(accTime)));
+        clock.restart();
+       
 
         /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
             cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
         }*/
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590) && (yCoord >= 250 && yCoord <= 270))
+       /* if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590) && (yCoord >= 250 && yCoord <= 270))
         {
 
                 window.clear(sf::Color::Black);
@@ -88,7 +108,7 @@ int main()
             period_ms = 4800.f;
             line.setPosition(705.f, 340.f);
             line.setRotation(140.f);
-        }
+        }*/
         
         window.clear();
         window.draw(shape);
