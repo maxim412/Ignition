@@ -7,9 +7,11 @@
 using namespace std;
 // done -- orbitting circle
 // done - detects on spacebar whether it overlaps the rectangle
+// done -- plays sound when pressed space on overlapped crcle
 // todo : print out instructions for to press space over the circle
-// todo: add sound on overlap success -- an engine, add points? , increase speed, put out a new skill check line ,put on appstore
-// todo -- add checkpoints for when to keypress and make circle go faster
+// todo: add score
+// todo -- add flames in backround on overlap spacebar success
+// todo-- add more skillchecks
 //todo, add rev soon
 
 float timeFactor = 1.0f;
@@ -35,13 +37,15 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000,1000), "SFML shapes", sf::Style::Default, settings);
 
     sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile("audio/rev.wav"))
+    if (!buffer.loadFromFile("rev.wav"))
     {
         cout << "error";
     }
     sf::Sound sound;
     sound.setBuffer(buffer);
-    sound.play();
+    sound.setPlayingOffset(sf::seconds(.8f));
+
+    
     window.setFramerateLimit(30);
 
     //orbitter white
@@ -83,6 +87,7 @@ int main()
                 timeFactor = 1.0f;*/
             else if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590 && yCoord >= 250 && yCoord <= 270))
             {
+                sound.play();
                 timeFactor = 2.0f;
                 line.setPosition(670.f, 310.f);
                 line.setRotation(125.f);
