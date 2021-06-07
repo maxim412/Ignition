@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Audio.hpp>
+
 using namespace std;
 // done -- orbitting circle
 // done - detects on spacebar whether it overlaps the rectangle
@@ -10,7 +12,6 @@ using namespace std;
 // todo -- add checkpoints for when to keypress and make circle go faster
 //todo, add rev soon
 
-int defaultFrameRate = 144;
 float timeFactor = 1.0f;
 float accTime = 0.0f;
 //todo
@@ -32,7 +33,16 @@ int main()
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode(1000,1000), "SFML shapes", sf::Style::Default, settings);
-    window.setFramerateLimit(defaultFrameRate);
+
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("audio/rev.wav"))
+    {
+        cout << "error";
+    }
+    sf::Sound sound;
+    sound.setBuffer(buffer);
+    sound.play();
+    window.setFramerateLimit(30);
 
     //orbitter white
     sf::CircleShape shape(28.f);
@@ -58,8 +68,7 @@ int main()
 
     while (window.isOpen())
     {
-       
-
+        
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -75,7 +84,6 @@ int main()
             else if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590 && yCoord >= 250 && yCoord <= 270))
             {
                 timeFactor = 2.0f;
-                window.clear(sf::Color::Black);
                 line.setPosition(670.f, 310.f);
                 line.setRotation(125.f);
             }
