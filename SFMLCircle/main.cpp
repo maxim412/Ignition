@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#
 #include <iostream>
 #include <iomanip>
 #include <SFML/Window/Event.hpp>
@@ -34,7 +35,7 @@ int main()
 {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
-    sf::RenderWindow window(sf::VideoMode(1000,1000), "SFML shapes", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML shapes", sf::Style::Default, settings);
 
     sf::SoundBuffer buffer;
     if (!buffer.loadFromFile("rev.wav"))
@@ -45,16 +46,16 @@ int main()
     sound.setBuffer(buffer);
     sound.setPlayingOffset(sf::seconds(.8f));
 
-    
+
     window.setFramerateLimit(30);
 
     //orbitter white
     sf::CircleShape shape(28.f);
     shape.setFillColor(sf::Color::Black);
     shape.setOutlineThickness(5);
-   //orbitter white
+    //orbitter white
 
-    //center red circle
+     //center red circle
     sf::CircleShape shapeTwo(208.f);
     shapeTwo.setFillColor(sf::Color::Red);
     shapeTwo.setOutlineThickness(5);
@@ -72,57 +73,52 @@ int main()
 
     while (window.isOpen())
     {
-        
+
         sf::Event event;
         while (window.pollEvent(event))
         {
             int yCoord = shape.getPosition().y;
             int xCoord = shape.getPosition().x;
-            cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
+
             if (event.type == sf::Event::Closed)
             {
                 window.close();
-            }   
-            /*else if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
-                timeFactor = 1.0f;*/
-            else if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590 && yCoord >= 250 && yCoord <= 270))
+            }
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
+            {
+                cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
+            }
+            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 560 && xCoord <= 600 && yCoord >= 250 && yCoord <= 280))
             {
                 sound.play();
                 timeFactor = 2.0f;
                 line.setPosition(670.f, 310.f);
                 line.setRotation(125.f);
             }
-                
+            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 630 && xCoord <= 680) && (yCoord >= 280 && yCoord <= 330))
+            {
+                sound.setPlayingOffset(sf::seconds(.8f));
+                sound.play();
+                line.setPosition(705.f, 340.f);
+                line.setRotation(140.f);
+            }
+            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 680 && xCoord <= 720) && (yCoord >= 330 && yCoord <= 360))
+            {
+                sound.setPlayingOffset(sf::seconds(.8f));
+                sound.play();
+                line.setPosition(735.f, 370.f);
+                line.setRotation(155.f);
+            }
+
+
         }
         //float const t = static_cast<float>(clock.getElapsedTime().asMilliseconds());
         float const dt = static_cast<float>(clock.getElapsedTime().asMilliseconds());
         accTime += dt * timeFactor;
         shape.setPosition(sf::Vector2f(500.f, 500.f) + (transform(accTime)));
         clock.restart();
-       
 
-        /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        {
-            cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
-        }*/
 
-       /* if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (xCoord >= 570 && xCoord <= 590) && (yCoord >= 250 && yCoord <= 270))
-        {
-
-                window.clear(sf::Color::Black);
-                period_ms = 4900.f;
-                line.setPosition(670.f, 310.f);
-                line.setRotation(125.f);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (xCoord >= 645 && xCoord <= 675) && (yCoord >= 290 && yCoord <= 310))
-        {
-
-            window.clear(sf::Color::Black);
-            period_ms = 4800.f;
-            line.setPosition(705.f, 340.f);
-            line.setRotation(140.f);
-        }*/
-        
         window.clear();
         window.draw(shape);
         window.draw(shapeTwo);
