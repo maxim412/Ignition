@@ -66,8 +66,8 @@ int main()
     //line white on top (skillcheck)
     sf::RectangleShape line(sf::Vector2f(30.f, 5.f));
     line.rotate(45.f);
-    line.setPosition(600.f, 280.f);
-    line.setRotation(100.f);
+    line.setPosition(535.f, 260.f);
+    line.setRotation(90.f);
     //line white on top (skillcheck)
     sf::Clock clock;
 
@@ -84,18 +84,18 @@ int main()
             {
                 window.close();
             }
-            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
             {
                 cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
             }
-            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 560 && xCoord <= 600 && yCoord >= 250 && yCoord <= 280))
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) && (xCoord >= 470 && xCoord <= 510 && yCoord >= 240 && yCoord <= 250))
             {
                 sound.play();
                 timeFactor = 2.0f;
-                line.setPosition(670.f, 310.f);
-                line.setRotation(125.f);
+                line.setPosition(800.f, 450.f);
+                line.setRotation(170.f);
             }
-            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 630 && xCoord <= 680) && (yCoord >= 280 && yCoord <= 330))
+            /*if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 630 && xCoord <= 675) && (yCoord >= 280 && yCoord <= 329))
             {
                 sound.setPlayingOffset(sf::seconds(.8f));
                 sound.play();
@@ -109,7 +109,13 @@ int main()
                 line.setPosition(735.f, 370.f);
                 line.setRotation(155.f);
             }
-
+            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 680 && xCoord <= 720) && (yCoord >= 330 && yCoord <= 360))
+            {
+                sound.setPlayingOffset(sf::seconds(.8f));
+                sound.play();
+                line.setPosition(735.f, 370.f);
+                line.setRotation(155.f);
+            }*/
 
         }
         //float const t = static_cast<float>(clock.getElapsedTime().asMilliseconds());
