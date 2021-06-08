@@ -92,8 +92,8 @@ int main()
             {
                 sound.play();
                 timeFactor = 2.0f;
-                line.setPosition(800.f, 450.f);
-                line.setRotation(170.f);
+                line.setPosition(780.f, 480.f);
+                line.setRotation(174.f);
             }
             /*if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 630 && xCoord <= 675) && (yCoord >= 280 && yCoord <= 329))
             {
