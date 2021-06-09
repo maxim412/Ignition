@@ -1,9 +1,9 @@
 #include <SFML/Graphics.hpp>
-#
 #include <iostream>
 #include <iomanip>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Audio.hpp>
+using namespace sf;
 
 using namespace std;
 // done -- orbitting circle
@@ -38,7 +38,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML shapes", sf::Style::Default, settings);
 
     sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile("rev.wav"))
+    if (!buffer.loadFromFile("snd.wav"))
     {
         cout << "error";
     }
@@ -65,7 +65,6 @@ int main()
 
     //line white on top (skillcheck)
     sf::RectangleShape line(sf::Vector2f(30.f, 5.f));
-    line.rotate(45.f);
     line.setPosition(535.f, 260.f);
     line.setRotation(90.f);
     //line white on top (skillcheck)
@@ -88,37 +87,62 @@ int main()
             {
                 cout << fixed << setprecision(0) << "White circle position: " << shape.getPosition().x << " , " << fixed << setprecision(0) << shape.getPosition().y << "\n\n";
             }
-            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) && (xCoord >= 470 && xCoord <= 510 && yCoord >= 240 && yCoord <= 250))
+            //spawn seconds (3pm)
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) && (xCoord >= 470 && xCoord <= 580 && yCoord >= 210 && yCoord <= 310))
             {
+                sound.stop();
+                sound.setPlayingOffset(seconds(.8f));
+                sound.setVolume(40);
+                sound.play();
+                timeFactor = 2.0f;
+                line.setPosition(790.f, 500.f);
+                line.setRotation(178.f);
+            }
+            //spawn 3rd (6pm)
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) && (xCoord >= 730 && xCoord <= 810 && yCoord >= 430 && yCoord <= 530))
+            {
+                sound.stop();
+                sound.setPlayingOffset(seconds(.8f));
+                sound.setVolume(60);
+                sound.play();
+                timeFactor = 3.0f;
+                line.setPosition(535.f, 755.f);
+                line.setRotation(90.f);
+            }
+            //spawn 4th (9pm)
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) && (xCoord >= 490 && xCoord <= 580 && yCoord >= 710 && yCoord <= 790))
+            {
+                sound.stop();
+                sound.setPlayingOffset(seconds(.8f));
+                sound.setVolume(80);
+                sound.play();
+                timeFactor = 4.0f;
+                line.setPosition(275.f, 495.f);
+                line.setRotation(.1f);
+            }
+            //reset (12pm)
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) && (xCoord >= 225 && xCoord <= 325 && yCoord >= 445 && yCoord <= 545))
+            {
+                sound.stop();
+                sound.setPlayingOffset(seconds(.8f));
+                sound.setVolume(100);
+                sound.play();
+                timeFactor = 5.0f;
+                line.setPosition(535.f, 260.f);
+                line.setRotation(90.f);
+            }
+
+            /*if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) && (xCoord >= 702 && xCoord <= 782 && yCoord >= 402 && yCoord <= 482))
+            {
+                sound.setPlayingOffset(sf::seconds(.8f));
                 sound.play();
                 timeFactor = 2.0f;
                 line.setPosition(780.f, 480.f);
                 line.setRotation(174.f);
-            }
-            /*if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 630 && xCoord <= 675) && (yCoord >= 280 && yCoord <= 329))
-            {
-                sound.setPlayingOffset(sf::seconds(.8f));
-                sound.play();
-                line.setPosition(705.f, 340.f);
-                line.setRotation(140.f);
-            }
-            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 680 && xCoord <= 720) && (yCoord >= 330 && yCoord <= 360))
-            {
-                sound.setPlayingOffset(sf::seconds(.8f));
-                sound.play();
-                line.setPosition(735.f, 370.f);
-                line.setRotation(155.f);
-            }
-            if ((event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) && (xCoord >= 680 && xCoord <= 720) && (yCoord >= 330 && yCoord <= 360))
-            {
-                sound.setPlayingOffset(sf::seconds(.8f));
-                sound.play();
-                line.setPosition(735.f, 370.f);
-                line.setRotation(155.f);
             }*/
+            
 
         }
-        //float const t = static_cast<float>(clock.getElapsedTime().asMilliseconds());
         float const dt = static_cast<float>(clock.getElapsedTime().asMilliseconds());
         accTime += dt * timeFactor;
         shape.setPosition(sf::Vector2f(500.f, 500.f) + (transform(accTime)));
